@@ -18,3 +18,13 @@ class IssuePublicStatement:
 
         return output
     
+    def check_action_format(self, generated_action):
+        if generated_action.startswith("IssuePublicStatement(") and generated_action.endswith(")"):
+            arguments = generated_action[len("IssuePublicStatement("):-1].split(", ")
+            try:
+                assert len(arguments) == 2
+                content = arguments[0].split("=")[0].strip()
+                attitude = arguments[1].split("=")[0].strip()
+                assert content == "content" and attitude == "attitude"
+            except:
+                return "Invalid action format"
