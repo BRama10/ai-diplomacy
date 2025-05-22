@@ -19,12 +19,14 @@ class IssuePublicStatement:
         return output
     
     def check_action_format(self, generated_action):
-        if generated_action.startswith("IssuePublicStatement(") and generated_action.endswith(")"):
-            arguments = generated_action[len("IssuePublicStatement("):-1].split(", ")
+        if generated_action.startswith("IssuePublicStatement"):
             try:
+                assert generated_action.endswith(")")
+                arguments = generated_action[len("IssuePublicStatement("):-1].split(", ")
                 assert len(arguments) == 2
                 content = arguments[0].split("=")[0].strip()
                 attitude = arguments[1].split("=")[0].strip()
                 assert content == "content" and attitude == "attitude"
             except:
-                return "Invalid action format"
+                return "Invalid action format for IssuePublicStatement. Please follow the format: IssuePublicStatement(content=content, attitude=attitude)"
+
