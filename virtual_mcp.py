@@ -51,3 +51,32 @@ if __name__ == '__main__':
 
     action_space.remove_actions([a1])
     print(action_space.action_space_prompt)
+
+    agent_name = "USA"
+    
+    actions = [
+        IssuePublicStatement(agent_name),
+        SendBackChannel(agent_name),
+        ThreatenAggression(agent_name),
+        DeliverUltimatum(agent_name),
+        ProposeTradeOrConcession(agent_name)
+    ]
+    
+    action_space.add_actions(actions)
+    
+    print(action_space.action_space_prompt)
+    
+    back_channel = SendBackChannel("USA")
+    print(back_channel("China", "We need to discuss the trade situation privately", 0))
+    
+    threat = ThreatenAggression("USA")
+    print(threat("Russia", "Cease your military buildup or face consequences", -2))
+    
+    ultimatum = DeliverUltimatum("USA")
+    print(ultimatum("Iran", "Halt nuclear enrichment within 30 days", "30 days", -1))
+    
+    trade = ProposeTradeOrConcession("USA")
+    print(trade("EU", "Reduce tariffs on agricultural products", "Increase technology sharing agreements", 1))
+
+    action_space.remove_actions([*actions])
+    print(action_space.action_space_prompt)
